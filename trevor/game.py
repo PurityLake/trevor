@@ -1,4 +1,5 @@
 import arcade
+import arcade.gui as gui
 
 from .player import Player
 
@@ -20,7 +21,7 @@ class Game(arcade.Window):
         self.sword_sprite = arcade.Sprite("assets/images/ironsword.png", 1.5)
         self.sword_sprite.position = (200, 100)
         
-        self.sprite_list.append(self.player.sprite)
+        self.sprite_list.append(self.player)
         # self.sprite_list.append(self.wood_sprite)
         # self.sprite_list.append(self.sword_sprite)
 
