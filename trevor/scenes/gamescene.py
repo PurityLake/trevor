@@ -5,6 +5,7 @@ import arcade.gui as gui
 
 from ..player import Player
 from .trevorscene import TrevorScene
+from ..gui.bar import Bar
 
 HEART_WIDTH=35
 HEART_HEIGHT=35
@@ -54,12 +55,35 @@ class MainGameScene(arcade.Scene, TrevorScene):
                 self.heartwidgets.append(widget.with_space_around(left=5, bottom=10))
             self.hbox.add(self.heartwidgets[i])
         
+        hydration_name = os.path.join("assets", "images", "hydration.png")
+        # self.bar = Bar(hydration_name, 100, 0, 100, (255, 0, 0), (0, 255, 0), 150, 16, width=400)
+        self.bar = Bar(
+            texture_name=hydration_name,
+            value=50,
+            min_value=0,
+            max_value=100,
+            bg_color=(0, 0, 0),
+            fill_color=(0, 0, 255),
+            bar_width=150,
+            bar_height=16,
+            width=250
+        )
+
         self.manager.add(
             gui.UIAnchorWidget(
                 anchor_x="left",
                 anchor_y="bottom",
                 align_x=10,
                 child=self.hbox
+            )
+        )
+        self.manager.add(
+            gui.UIAnchorWidget(
+                anchor_x="left",
+                anchor_y="bottom",
+                align_x=10,
+                align_y=HEART_HEIGHT,
+                child=self.bar
             )
         )
     
