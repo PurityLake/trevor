@@ -1,3 +1,8 @@
+"""player.py
+Contains Player class that implements logic and
+drawing functionality for the game
+"""
+
 from typing import Tuple
 import arcade
 
@@ -8,8 +13,12 @@ FILENAME: str = "assets/images/steve.png"
 SPEED_X: int = 5
 SPEED_Y: int = 5
 
-
 class Player(arcade.Sprite):
+    """Player
+    Contains the logic and drawing functionality for the player
+    in the Trevor game
+    """
+
     MAX_HEALTH: int = 5
 
     def __init__(self):
@@ -21,7 +30,7 @@ class Player(arcade.Sprite):
         self.health: int = 5
 
         self.set_position(100, 100)
-    
+
     def on_update(self, delta_time: float = 1 / 60):
         super().update ()
 
@@ -36,22 +45,32 @@ class Player(arcade.Sprite):
                 self.rot_dir = 1
         else:
             self.angle = 0
-    
+
     def key_press(self, key: int, key_modifiers: int):
+        """key_press
+        Reacts to keys that are pressed that are fed down to this
+        object
+        """
+        # pylint: disable=unused-argument
         move_x, move_y = self.vec
         if key == arcade.key.W:
             move_y = 1
         elif key == arcade.key.S:
             move_y = -1
-        
+
         if key == arcade.key.A:
             move_x = -1
         elif key == arcade.key.D:
             move_x = 1
         self.vec = (move_x, move_y)
         self.moving = self.vec != (0, 0)
-    
-    def key_release(self, key, key_modifers):
+
+    def key_release(self, key: int, key_modifers: int):
+        """key_press
+        Reacts to keys that are released that are fed down to this
+        object
+        """
+        # pylint: disable=unused-argument
         move_x, move_y = self.vec
         if key == arcade.key.W or key == arcade.key.S:
             move_y = 0

@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+"""run_game.py
+Script to run the game`
+"""
+
 import arcade
 
 from trevor.game import Game
