@@ -15,6 +15,14 @@ class MainGameScene(arcade.Scene, TrevorScene):
     def __init__(self):
         super().__init__()
 
+        self.tile_map = arcade.load_tilemap(os.path.join("assets", "maps", "trevorexamplemap.tmx"))
+        self.end_of_map = self.tile_map.width
+        self.tile_map_sprite_list = arcade.SpriteList()
+        self.tile_map.scaling = 1
+
+        self.add_sprite_list("Map", True, self.tile_map.sprite_lists["Map"])
+        self.add_sprite_list("Plants", sprite_list=self.tile_map.sprite_lists["Plants"])
+
         self.player: Player = Player()
         self.last_health: int = self.player.health
         self.sprite_list: arcade.SpriteList = arcade.SpriteList()
