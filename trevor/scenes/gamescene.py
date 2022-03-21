@@ -15,10 +15,11 @@ class MainGameScene(arcade.Scene, TrevorScene):
     def __init__(self):
         super().__init__()
 
-        self.tile_map = arcade.load_tilemap(os.path.join("assets", "maps", "trevorexamplemap.tmx"))
-        self.end_of_map = self.tile_map.width
-        self.tile_map_sprite_list = arcade.SpriteList()
-        self.tile_map.scaling = 1
+        self.camera: arcade.Camera = arcade.Camera(800, 600)
+        self.gui_camera: arcade.Camera = arcade.Camera(800, 600)
+
+        self.tile_map: arcade.TileMap = arcade.load_tilemap(os.path.join("assets", "maps", "trevorexamplemap.tmx"))
+        self.end_of_map: int = self.tile_map.width
 
         self.add_sprite_list("Map", True, self.tile_map.sprite_lists["Map"])
         self.add_sprite_list("Plants", sprite_list=self.tile_map.sprite_lists["Plants"])
@@ -36,6 +37,8 @@ class MainGameScene(arcade.Scene, TrevorScene):
         self.heartemptysprite: arcade.Sprite = None
         self.heartwidgets: List[gui.UISpriteWidget] = None
         self.__setup_gui()
+
+        self.pan_camera_to_user()
         
 
     def __setup_gui(self):
@@ -64,9 +67,8 @@ class MainGameScene(arcade.Scene, TrevorScene):
                 self.heartwidgets.append(widget.with_space_around(left=5, bottom=10))
             self.hbox.add(self.heartwidgets[i])
         
-        hydration_name = os.path.join("assets", "images", "hydration.png")
         self.bar = Bar(
-            texture_name=hydration_name,
+            texture_name=os.path.join("assets", "images", "hydration.png"),
             value=50,
             min_value=0,
             max_value=100,
@@ -96,12 +98,15 @@ class MainGameScene(arcade.Scene, TrevorScene):
         )
     
     def draw(self):
+        self.camera.use()
         super().draw()
+        self.gui_camera.use()
         self.manager.draw()
 
 
     def on_update(self, delta_time: float = 1 / 60, names: Optional[List[str]] = None):
         self.player.on_update(delta_time)
+        self.pan_camera_to_user()
 
         if self.player.health != self.last_health:
             diff = self.last_health - self.player.health
@@ -146,3 +151,10 @@ class MainGameScene(arcade.Scene, TrevorScene):
     
     def on_mouse_release(self, x: float, y: float, button: int, key_modifiers: int):
         pass
+
+    def pan_camera_to_user(self, panning_friction: float = 1.0):
+        screen_center_x = self.player.center_x - (self.camera.viewport_width / 2)
+        screen_center_y = self.player.center_y - (self.camera.viewport_height / 2)
+
+        user_centered = screen_center_x, screen_center_y
+        self.camera.move_to(user_centered, panning_friction)
