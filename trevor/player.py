@@ -1,27 +1,30 @@
+from typing import Tuple
 import arcade
 
-MIN_ROT = -25
-MAX_ROT = 25
-CHANGE_ROT = 3.5
-FILENAME = "assets/images/steve.png"
-SPEED_X = 5
-SPEED_Y = 5
+MIN_ROT: int = -25
+MAX_ROT: int = 25
+CHANGE_ROT: float = 3.5
+FILENAME: str = "assets/images/steve.png"
+SPEED_X: int = 5
+SPEED_Y: int = 5
 
 
 class Player(arcade.Sprite):
-    MAX_HEALTH = 5
+    MAX_HEALTH: int = 5
 
     def __init__(self):
         super().__init__(FILENAME, 1)
 
-        self.moving = False
-        self.vec = (0, 0)
-        self.rot_dir = 1
-        self.set_position(100, 100)
+        self.moving: bool = False
+        self.vec: Tuple[int, int] = (0, 0)
+        self.rot_dir: int = 1
+        self.health: int = 5
 
-        self.health = 5
+        self.set_position(100, 100)
     
-    def update(self, delta_time):
+    def on_update(self, delta_time: float = 1 / 60):
+        super().update ()
+
         if self.moving:
             self.set_position(
                 self.center_x + SPEED_X * self.vec[0],
@@ -34,7 +37,7 @@ class Player(arcade.Sprite):
         else:
             self.angle = 0
     
-    def key_press(self, key, key_modifiers):
+    def key_press(self, key: int, key_modifiers: int):
         move_x, move_y = self.vec
         if key == arcade.key.W:
             move_y = 1

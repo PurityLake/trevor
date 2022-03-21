@@ -1,0 +1,1 @@
+mypy @file_list.txt

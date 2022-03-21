@@ -7,7 +7,7 @@ class Game(arcade.Window):
     def __init__(self, width: int, height: int, title: str):
         super().__init__(width, height, title)
         arcade.set_background_color(arcade.color.AMAZON)
-        self.scene: TrevorScene = None
+        self.scene: TrevorScene
         self.setup()
 
     def setup(self):

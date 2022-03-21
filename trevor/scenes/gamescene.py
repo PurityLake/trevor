@@ -1,4 +1,5 @@
 import os
+from typing import List, Optional
 
 import arcade
 import arcade.gui as gui
@@ -14,18 +15,18 @@ class MainGameScene(arcade.Scene, TrevorScene):
     def __init__(self):
         super().__init__()
 
-        self.player = Player()
-        self.last_health = self.player.health
-        self.sprite_list = arcade.SpriteList()
+        self.player: Player = Player()
+        self.last_health: int = self.player.health
+        self.sprite_list: arcade.SpriteList = arcade.SpriteList()
         self.sprite_list.append(self.player)
         self.add_sprite_list("Player")
         self.add_sprite("Player", self.player)
 
-        self.manager = None
-        self.hbox = None
-        self.heartfulltex = None
-        self.heartemptytex = None
-        self.heartwidgets = None
+        self.manager: gui.UIManager = None
+        self.hbox: gui.UIBoxLayout = None
+        self.heartfullsprite: arcade.Sprite = None
+        self.heartemptysprite: arcade.Sprite = None
+        self.heartwidgets: List[gui.UISpriteWidget] = None
         self.__setup_gui()
         
 
@@ -34,8 +35,8 @@ class MainGameScene(arcade.Scene, TrevorScene):
         self.manager.enable()
 
         self.hbox = gui.UIBoxLayout(vertical=False)
-        self.heartfulltex = arcade.Sprite(os.path.join("assets", "images", "heartfull.png"), 0.25)
-        self.heartemptytex = arcade.Sprite(os.path.join("assets", "images", "heartempty.png"), 0.25)
+        self.heartfullsprite = arcade.Sprite(os.path.join("assets", "images", "heartfull.png"), 0.25)
+        self.heartemptysprite = arcade.Sprite(os.path.join("assets", "images", "heartempty.png"), 0.25)
         
         self.heartwidgets = []
         for i in range(Player.MAX_HEALTH):
@@ -43,20 +44,19 @@ class MainGameScene(arcade.Scene, TrevorScene):
                 widget = gui.UISpriteWidget(
                     x=i*HEART_WIDTH, y=HEART_HEIGHT,
                     width=HEART_WIDTH, height=HEART_HEIGHT,
-                    sprite=self.heartfulltex
+                    sprite=self.heartfullsprite
                 )
                 self.heartwidgets.append(widget.with_space_around(left=5, bottom=10))
             else:
                 widget = gui.UISpriteWidget(
                     x=i*HEART_WIDTH, y=HEART_HEIGHT,
                     width=HEART_WIDTH, height=HEART_HEIGHT,
-                    sprite=self.heartemptytex
+                    sprite=self.heartemptysprite
                 )
                 self.heartwidgets.append(widget.with_space_around(left=5, bottom=10))
             self.hbox.add(self.heartwidgets[i])
         
         hydration_name = os.path.join("assets", "images", "hydration.png")
-        # self.bar = Bar(hydration_name, 100, 0, 100, (255, 0, 0), (0, 255, 0), 150, 16, width=400)
         self.bar = Bar(
             texture_name=hydration_name,
             value=50,
@@ -90,13 +90,14 @@ class MainGameScene(arcade.Scene, TrevorScene):
     def draw(self):
         super().draw()
         self.manager.draw()
-    
-    def on_update(self, delta_time):
-        self.player.update(delta_time)
+
+
+    def on_update(self, delta_time: float = 1 / 60, names: Optional[List[str]] = None):
+        self.player.on_update(delta_time)
 
         if self.player.health != self.last_health:
             diff = self.last_health - self.player.health
-            sprite = self.heartemptytex if diff > 0 else self.heartfulltex
+            sprite = self.heartemptysprite if diff > 0 else self.heartfullsprite
 
             if diff > 0:
                 for i in range(self.player.health, self.last_health):
@@ -117,7 +118,7 @@ class MainGameScene(arcade.Scene, TrevorScene):
             self.last_health = self.player.health
 
     
-    def on_key_press(self, key, key_modifiers):
+    def on_key_press(self, key: int, key_modifiers: int):
         self.player.key_press(key, key_modifiers)
 
         if key == arcade.key.LEFT:
@@ -129,11 +130,11 @@ class MainGameScene(arcade.Scene, TrevorScene):
     def on_key_release(self, key, key_modifiers):
         self.player.key_release(key, key_modifiers)
     
-    def on_mouse_motion(self, x, y, delta_x, delta_y):
+    def on_mouse_motion(self, x: float, y: float, delta_x: float, delta_y: float):
         pass
     
-    def on_mouse_press(self, x, y, button, key_modifiers):
+    def on_mouse_press(self, x: float, y: float, button: int, key_modifiers: int):
         pass
     
-    def on_mouse_release(self, x, y, button, key_modifiers):
+    def on_mouse_release(self, x: float, y: float, button: int, key_modifiers: int):
         pass

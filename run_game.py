@@ -4,11 +4,11 @@ import arcade
 
 from trevor.game import Game
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-SCREEN_TITLE = "Trevor - Pyweek 33"
+SCREEN_WIDTH: int = 800
+SCREEN_HEIGHT: int = 600
+SCREEN_TITLE: str = "Trevor - Pyweek 33"
 
 if __name__ == "__main__":
-    game = Game(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+    game: Game = Game(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
     game.setup()
     arcade.run()

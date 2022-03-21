@@ -1,4 +1,5 @@
-from turtle import fillcolor
+from typing import Tuple, Iterable
+
 import arcade
 import arcade.gui as gui
 from arcade.experimental.uislider import UISlider
@@ -6,19 +7,19 @@ from arcade.experimental.uistyle import UISliderStyle
 
 class Bar(gui.UIWidget):
     def __init__(self,
-        texture_name,
-        value,
-        min_value,
-        max_value,
-        bg_color,
-        fill_color,
-        bar_width,
-        bar_height,
-        x=0,
-        y=0,
-        width=100,
-        height=100,
-        children=[],
+        texture_name: str,
+        value: int,
+        min_value: int,
+        max_value: int,
+        bg_color: Tuple[int, int, int],
+        fill_color: Tuple[int, int, int],
+        bar_width: int,
+        bar_height:  int,
+        x: float = 0,
+        y: float = 0,
+        width: float = 100,
+        height: float = 100,
+        children: Iterable[gui.UIWidget] = [],
         size_hint=None,
         size_hint_min=None,
         size_hint_max=None,
@@ -26,16 +27,16 @@ class Bar(gui.UIWidget):
         **kwargs
         ):
         super().__init__(x, y, width, height, children, size_hint, size_hint_min, size_hint_max, style, **kwargs)
-        self.texture = arcade.load_texture(texture_name)
-        self.value = value
-        self.min_value = min_value
-        self.max_value = max_value
-        self.bg_color = bg_color
-        self.fill_color = fill_color
-        self.bar_width = bar_width
-        self.bar_height = bar_height
+        self.texture: arcade.Texture = arcade.load_texture(texture_name)
+        self.value: int = value
+        self.min_value: int = min_value
+        self.max_value: int = max_value
+        self.bg_color: Tuple[int, int, int] = bg_color
+        self.fill_color: Tuple[int, int, int] = fill_color
+        self.bar_width: int = bar_width
+        self.bar_height: int = bar_height
     
-    def do_render(self, surface):
+    def do_render(self, surface: gui.Surface):
         self.prepare_render(surface)
         arcade.draw_texture_rectangle(self.x+5, self.y, 32, 32, self.texture)
         arcade.draw_xywh_rectangle_filled(self.x+30, self.y-self.bar_height/2, self.bar_width, self.bar_height, self.bg_color)
