@@ -34,7 +34,7 @@ class Player(arcade.Sprite):
         else:
             self.angle = 0
     
-    def key_press(self, key):
+    def key_press(self, key, key_modifiers):
         move_x, move_y = self.vec
         if key == arcade.key.W:
             move_y = 1
@@ -48,7 +48,7 @@ class Player(arcade.Sprite):
         self.vec = (move_x, move_y)
         self.moving = self.vec != (0, 0)
     
-    def key_release(self, key):
+    def key_release(self, key, key_modifers):
         move_x, move_y = self.vec
         if key == arcade.key.W or key == arcade.key.S:
             move_y = 0
