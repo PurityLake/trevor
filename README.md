@@ -27,6 +27,8 @@ the following libraries:
 - Python 3
 - Python Arcade Library
     - https://api.arcade.academy/en/latest/
+- mypy (used for typechecking)
+    - https://github.com/python/mypy
 
 ## How To Run
 ### Linux and MacOS
