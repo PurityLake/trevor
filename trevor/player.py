@@ -12,6 +12,7 @@ CHANGE_ROT: float = 3.5
 FILENAME: str = "assets/images/steve.png"
 SPEED_X: int = 5
 SPEED_Y: int = 5
+CELL_WIDTH: int = 16
 
 class Player(arcade.Sprite):
     """Player
@@ -29,15 +30,22 @@ class Player(arcade.Sprite):
         self.rot_dir: int = 1
         self.health: int = 5
 
+
+        self.copy: arcade.Sprite = arcade.Sprite(FILENAME, 1)
+        self.copy.set_hit_box(
+            [
+                (-self.width / 2 + CELL_WIDTH, -self.height / 2),
+                (-self.width / 2 + CELL_WIDTH, -self.height / 4),
+                ( self.width / 2 - CELL_WIDTH, -self.height / 4),
+                ( self.width / 2 - CELL_WIDTH, -self.height / 2)])
         self.set_position(100, 100)
 
     def on_update(self, delta_time: float = 1 / 60):
-        super().update ()
+        super().update()
 
         if self.moving:
-            self.set_position(
-                self.center_x + SPEED_X * self.vec[0],
-                self.center_y + SPEED_Y * self.vec[1])
+            self.copy.change_x = SPEED_X * self.vec[0]
+            self.copy.change_y = SPEED_Y * self.vec[1]
             self.angle += CHANGE_ROT * self.rot_dir
             if self.angle > MAX_ROT:
                 self.rot_dir = -1
@@ -45,6 +53,12 @@ class Player(arcade.Sprite):
                 self.rot_dir = 1
         else:
             self.angle = 0
+            self.copy.change_x = 0
+            self.copy.change_y = 0
+
+    def set_position(self, center_x: float, center_y: float):
+        self.copy.set_position(center_x, center_y)
+        return super().set_position(center_x, center_y)
 
     def key_press(self, key: int, key_modifiers: int):
         """key_press

@@ -13,25 +13,30 @@ from .trevorscene import TrevorScene
 from ..gui.bar import Bar
 
 HEART_WIDTH: int = 35
-HEART_HEIGHT:int = 35
+HEART_HEIGHT: int = 35
 
 class MainGameScene(arcade.Scene, TrevorScene):
     """MainGameScene
     Contains the objects to be drawn and updated each tick
     """
-
     def __init__(self):
         super().__init__()
+
+        arcade.set_background_color((91, 110, 225)) # color of the water tile in the tileset
 
         self.camera: arcade.Camera = arcade.Camera(800, 600)
         self.gui_camera: arcade.Camera = arcade.Camera(800, 600)
 
-        self.tile_map: arcade.TileMap = arcade.load_tilemap(
+        tile_map: arcade.TileMap = arcade.load_tilemap(
             os.path.join("assets", "maps", "trevorexamplemap.tmx"))
-        self.end_of_map: int = self.tile_map.width
+        self.end_of_map: int = tile_map.width
 
-        self.add_sprite_list("Map", True, self.tile_map.sprite_lists["Map"])
-        self.add_sprite_list("Plants", sprite_list=self.tile_map.sprite_lists["Plants"])
+        self.rocks = tile_map.sprite_lists["Rocks"]
+        self.edge = tile_map.sprite_lists["Edge"]
+        self.add_sprite_list("Map", sprite_list=tile_map.sprite_lists["Map"])
+        self.add_sprite_list("Deco", sprite_list=tile_map.sprite_lists["Deco"])
+        self.add_sprite_list("Rocks", sprite_list=self.rocks)
+        self.add_sprite_list("Edge", sprite_list=self.edge)
 
         self.player: Player = Player()
         self.last_health: int = self.player.health
@@ -39,6 +44,10 @@ class MainGameScene(arcade.Scene, TrevorScene):
         self.sprite_list.append(self.player)
         self.add_sprite_list("Player")
         self.add_sprite("Player", self.player)
+
+        self.physics_engine: arcade.PhysicsEngineSimple = arcade.PhysicsEngineSimple(
+            self.player.copy, [ self.rocks, self.edge ]
+        )
 
         self.manager: gui.UIManager = None
         self.hbox: gui.UIBoxLayout = None
@@ -115,7 +124,6 @@ class MainGameScene(arcade.Scene, TrevorScene):
 
     def on_update(self, delta_time: float = 1 / 60, names: Optional[List[str]] = None):
         self.player.on_update(delta_time)
-        self.pan_camera_to_user(0.05)
 
         if self.player.health != self.last_health:
             diff = self.last_health - self.player.health
@@ -140,6 +148,9 @@ class MainGameScene(arcade.Scene, TrevorScene):
                         left=5, bottom=10)
             self.last_health = self.player.health
 
+        self.physics_engine.update()
+        self.player.position = self.player.copy.position
+        self.pan_camera_to_user(0.05)
 
     def on_key_press(self, key: int, key_modifiers: int):
         self.player.key_press(key, key_modifiers)

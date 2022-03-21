@@ -15,7 +15,7 @@ class Game(arcade.Window):
     """
 
     def __init__(self, width: int, height: int, title: str):
-        super().__init__(width, height, title)
+        super().__init__(width, height, title, resizable=False)
         arcade.set_background_color(arcade.color.AMAZON)
         self.scene: TrevorScene
         self.setup()
@@ -35,6 +35,8 @@ class Game(arcade.Window):
 
     def on_key_press(self, symbol: int, modifiers: int):
         self.scene.on_key_press(symbol, modifiers)
+        if symbol == arcade.key.ESCAPE:
+            self.close()
 
     def on_key_release(self, symbol: int, modifiers: int):
         self.scene.on_key_release(symbol, modifiers)
