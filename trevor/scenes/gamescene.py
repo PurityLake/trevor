@@ -106,7 +106,7 @@ class MainGameScene(arcade.Scene, TrevorScene):
 
     def on_update(self, delta_time: float = 1 / 60, names: Optional[List[str]] = None):
         self.player.on_update(delta_time)
-        self.pan_camera_to_user()
+        self.pan_camera_to_user(0.05)
 
         if self.player.health != self.last_health:
             diff = self.last_health - self.player.health
