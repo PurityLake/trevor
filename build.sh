@@ -1,0 +1,1 @@
+pyinstaller run_game.py --noconfirm --onefile --onedir --noconsole --name="Trevor" --add-data=./assets:assets/

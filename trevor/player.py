@@ -3,13 +3,15 @@ Contains Player class that implements logic and
 drawing functionality for the game
 """
 
+import os
+import sys
 from typing import Tuple
 import arcade
 
 MIN_ROT: int = -25
 MAX_ROT: int = 25
 CHANGE_ROT: float = 3.5
-FILENAME: str = "assets/images/steve.png"
+FILENAME: str = os.path.join("assets", "images", "steve.png")
 SPEED_X: int = 5
 SPEED_Y: int = 5
 CELL_WIDTH: int = 16
@@ -23,15 +25,23 @@ class Player(arcade.Sprite):
     MAX_HEALTH: int = 5
 
     def __init__(self):
-        super().__init__(FILENAME, 1)
+        app_path = ""
+        if getattr(sys, 'frozen', False):
+            app_path = os.path.dirname(sys.executable)
+        elif __file__:
+            app_path = os.path.dirname(__file__)
+
+        filename = os.path.join(app_path, FILENAME)
+        super().__init__(filename, 1)
 
         self.moving: bool = False
         self.vec: Tuple[int, int] = (0, 0)
         self.rot_dir: int = 1
         self.health: int = 5
 
+        
 
-        self.copy: arcade.Sprite = arcade.Sprite(FILENAME, 1)
+        self.copy: arcade.Sprite = arcade.Sprite(filename, 1)
         self.copy.set_hit_box(
             [
                 (-self.width / 2 + CELL_WIDTH, -self.height / 2),

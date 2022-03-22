@@ -3,6 +3,7 @@ Contains the main game's scene that provides the gameplay
 for the game
 """
 import os
+import sys
 from typing import List, Optional
 
 import arcade
@@ -27,8 +28,14 @@ class MainGameScene(arcade.Scene, TrevorScene):
         self.camera: arcade.Camera = arcade.Camera(800, 600)
         self.gui_camera: arcade.Camera = arcade.Camera(800, 600)
 
+        self.app_path = ""
+        if getattr(sys, 'frozen', False):
+            self.app_path = os.path.dirname(sys.executable)
+        elif __file__:
+            self.app_path = os.path.dirname(__file__)
+
         tile_map: arcade.TileMap = arcade.load_tilemap(
-            os.path.join("assets", "maps", "trevorexamplemap.tmx"))
+            os.path.join(self.app_path, "assets", "maps", "trevorexamplemap.tmx"))
         self.end_of_map: int = tile_map.width
 
         self.rocks = tile_map.sprite_lists["Rocks"]
@@ -67,9 +74,9 @@ class MainGameScene(arcade.Scene, TrevorScene):
 
         self.hbox = gui.UIBoxLayout(vertical=False)
         self.heartfullsprite = arcade.Sprite(
-            os.path.join("assets", "images", "heartfull.png"), 0.25)
+            os.path.join(self.app_path, "assets", "images", "heartfull.png"), 0.25)
         self.heartemptysprite = arcade.Sprite(
-            os.path.join("assets", "images", "heartempty.png"), 0.25)
+            os.path.join(self.app_path, "assets", "images", "heartempty.png"), 0.25)
 
         self.heartwidgets = []
         for i in range(Player.MAX_HEALTH):
@@ -91,7 +98,7 @@ class MainGameScene(arcade.Scene, TrevorScene):
 
         self.vbox = gui.UIBoxLayout()
         self.thirst_bar = Bar(
-            texture_name=os.path.join("assets", "images", "hydration.png"),
+            texture_name=os.path.join(self.app_path, "assets", "images", "hydration.png"),
             value=50,
             min_value=0,
             max_value=100,
@@ -103,7 +110,7 @@ class MainGameScene(arcade.Scene, TrevorScene):
         )
 
         self.hunger_bar = Bar(
-            texture_name=os.path.join("assets", "images", "hunger.png"),
+            texture_name=os.path.join(self.app_path, "assets", "images", "hunger.png"),
             value=50,
             min_value=0,
             max_value=100,
