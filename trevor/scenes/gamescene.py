@@ -54,6 +54,9 @@ class MainGameScene(arcade.Scene, TrevorScene):
         self.heartfullsprite: arcade.Sprite = None
         self.heartemptysprite: arcade.Sprite = None
         self.heartwidgets: List[gui.UISpriteWidget] = None
+        self.vbox: gui.UIBoxLayout = None
+        self.thirst_bar: Bar = None
+        self.hunger_bar: Bar = None
         self.__setup_gui()
 
         self.pan_camera_to_user()
@@ -86,6 +89,7 @@ class MainGameScene(arcade.Scene, TrevorScene):
                 self.heartwidgets.append(widget.with_space_around(left=5, bottom=10))
             self.hbox.add(self.heartwidgets[i])
 
+        self.vbox = gui.UIBoxLayout()
         self.thirst_bar = Bar(
             texture_name=os.path.join("assets", "images", "hydration.png"),
             value=50,
@@ -93,6 +97,18 @@ class MainGameScene(arcade.Scene, TrevorScene):
             max_value=100,
             bg_color=(0, 0, 0),
             fill_color=(0, 0, 255),
+            bar_width=150,
+            bar_height=16,
+            width=250
+        )
+
+        self.hunger_bar = Bar(
+            texture_name=os.path.join("assets", "images", "hunger.png"),
+            value=50,
+            min_value=0,
+            max_value=100,
+            bg_color=(255, 0, 0),
+            fill_color=(0, 255, 0),
             bar_width=150,
             bar_height=16,
             width=250
@@ -111,7 +127,16 @@ class MainGameScene(arcade.Scene, TrevorScene):
                 anchor_x="left",
                 anchor_y="bottom",
                 align_x=10,
-                align_y=HEART_HEIGHT,
+                align_y=HEART_HEIGHT-2,
+                child=self.hunger_bar
+            )
+        )
+        self.manager.add(
+            gui.UIAnchorWidget(
+                anchor_x="left",
+                anchor_y="bottom",
+                align_x=10,
+                align_y=HEART_HEIGHT+16,
                 child=self.thirst_bar
             )
         )
