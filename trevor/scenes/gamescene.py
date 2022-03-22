@@ -4,7 +4,7 @@ for the game
 """
 import os
 import sys
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 import arcade
 import arcade.gui as gui
@@ -20,7 +20,7 @@ class MainGameScene(arcade.Scene, TrevorScene):
     """MainGameScene
     Contains the objects to be drawn and updated each tick
     """
-    def __init__(self):
+    def __init__(self, app_path: str):
         super().__init__()
 
         arcade.set_background_color((91, 110, 225)) # color of the water tile in the tileset
@@ -28,11 +28,7 @@ class MainGameScene(arcade.Scene, TrevorScene):
         self.camera: arcade.Camera = arcade.Camera(800, 600)
         self.gui_camera: arcade.Camera = arcade.Camera(800, 600)
 
-        self.app_path = ""
-        if getattr(sys, 'frozen', False):
-            self.app_path = os.path.dirname(sys.executable)
-        elif __file__:
-            self.app_path = os.path.dirname(__file__)
+        self.app_path = app_path
 
         tile_map: arcade.TileMap = arcade.load_tilemap(
             os.path.join(self.app_path, "assets", "maps", "trevorexamplemap.tmx"))
@@ -45,7 +41,7 @@ class MainGameScene(arcade.Scene, TrevorScene):
         self.add_sprite_list("Rocks", sprite_list=self.rocks)
         self.add_sprite_list("Edge", sprite_list=self.edge)
 
-        self.player: Player = Player()
+        self.player: Player = Player(self.app_path)
         self.last_health: int = self.player.health
         self.sprite_list: arcade.SpriteList = arcade.SpriteList()
         self.sprite_list.append(self.player)
@@ -200,7 +196,13 @@ class MainGameScene(arcade.Scene, TrevorScene):
         pass
 
     def on_mouse_press(self, x: float, y: float, button: int, key_modifiers: int):
-        pass
+        point = x + self.camera.position[0], y + self.camera.position[1]
+        for sprite in self.rocks.sprite_list:
+            if sprite.collides_with_point(point):
+                self.remove_sprite_list_by_name("Rocks")
+                self.rocks.remove(sprite)
+                self.add_sprite_list("Rocks", sprite_list=self.rocks)
+                break
 
     def on_mouse_release(self, x: float, y: float, button: int, key_modifiers: int):
         pass

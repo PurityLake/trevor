@@ -14,9 +14,10 @@ class Game(arcade.Window):
     scenes to decide what to draw and when
     """
 
-    def __init__(self, width: int, height: int, title: str):
+    def __init__(self, width: int, height: int, title: str, app_path: str):
         super().__init__(width, height, title, resizable=False)
         arcade.set_background_color(arcade.color.AMAZON)
+        self.app_path = app_path
         self.scene: TrevorScene
         self.setup()
 
@@ -24,7 +25,7 @@ class Game(arcade.Window):
         """setup
         Sets up the base objects for the game to be drawn and updated
         """
-        self.scene = MainGameScene()
+        self.scene = MainGameScene(self.app_path)
 
     def on_draw(self):
         self.clear()

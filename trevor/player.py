@@ -24,13 +24,7 @@ class Player(arcade.Sprite):
 
     MAX_HEALTH: int = 5
 
-    def __init__(self):
-        app_path = ""
-        if getattr(sys, 'frozen', False):
-            app_path = os.path.dirname(sys.executable)
-        elif __file__:
-            app_path = os.path.dirname(__file__)
-
+    def __init__(self, app_path: str):
         filename = os.path.join(app_path, FILENAME)
         super().__init__(filename, 1)
 
@@ -39,11 +33,8 @@ class Player(arcade.Sprite):
         self.rot_dir: int = 1
         self.health: int = 5
 
-        
-
         self.copy: arcade.Sprite = arcade.Sprite(filename, 1)
-        self.copy.set_hit_box(
-            [
+        self.copy.set_hit_box([
                 (-self.width / 2 + CELL_WIDTH, -self.height / 2),
                 (-self.width / 2 + CELL_WIDTH, -self.height / 4),
                 ( self.width / 2 - CELL_WIDTH, -self.height / 4),
