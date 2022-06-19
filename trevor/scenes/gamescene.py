@@ -31,10 +31,11 @@ class MainGameScene(arcade.Scene, TrevorScene):
         self.app_path = app_path
 
         tile_map: arcade.TileMap = arcade.load_tilemap(
-            os.path.join(self.app_path, "assets", "maps", "trevorexamplemap.tmx"))
+            os.path.join(self.app_path, "assets", "maps", "biggertileset.tmx"))
         self.end_of_map: int = tile_map.width
 
         self.rocks = tile_map.sprite_lists["Rocks"]
+        #self.rocks.rescale(1.5)
         self.edge = tile_map.sprite_lists["Edge"]
         self.add_sprite_list("Map", sprite_list=tile_map.sprite_lists["Map"])
         self.add_sprite_list("Deco", sprite_list=tile_map.sprite_lists["Deco"])

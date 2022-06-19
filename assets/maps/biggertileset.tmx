@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.8" tiledversion="1.8.6" orientation="orthogonal" renderorder="left-down" width="95" height="79" tilewidth="64" tileheight="64" infinite="0" nextlayerid="6" nextobjectid="1">
+ <tileset firstgid="1" source="../tilesets/newtrevortileset.tsx"/>
+ <layer id="1" name="Map" width="95" height="79">
+  <data encoding="base64" compression="zlib">
+   eJztnNFxwyAQBeWkAjsVJKkg6sDpv6gov4ylOeCkx3G7M+9X2MthMYBZFoC83La8OeT96g8+AfctD4d8NLbf0/fR+9vL/XNp89PTfmt/j4KX+1Y/md1/blkX3Ks4s/Zxf4yX+58tX0W+T2wb930ucI97FV7vW9y34VH7uG8D9zpwr8PD/d66wlF+O9rDvS61fT3q2ltE97OME9zrwL0O3OvAvQ7c68C9DtzrwL0O3OvAvQ7c68jgvmWd9Yq1uQzuveM1jv73bMvzHWXWAb7vSLnyN4yxgftRgntdLO9u3se6eI0N3OM+UnAfz335X6ieszRZ0+qeOsd95OAe9xmDe9xnDO5xnzG4x33G4B73M+fVfQaWOw32wL093vuHuNe5t5wbsWQdwE00915kGD+4x30J7q/h1Z2L0fca9+aPHnNJT2as8RFq2gLudeBeB+514F4H7nXgXkete8vcuXZdqOaZlowwd7dQ676mpqzPjlKn3uBeB+514F4H7nWc6d66jxZlXuLNme7hmNo93qw1CgAA8/MHRyQnNA==
+  </data>
+ </layer>
+ <layer id="3" name="Edge" width="95" height="79">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20KP6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH4GdUQAAQ==
+  </data>
+ </layer>
+ <layer id="4" name="Rocks" width="95" height="79">
+  <data encoding="base64" compression="zlib">
+   eJzt0LENgEAQA8FPgAqACoD+O+Q6uAyj14y0ueUxAAAA+MJSrU1bbN3c9upoOmPr5ub7HN/n+D7H9zlXdTc9sXUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPzBCwbwBgU=
+  </data>
+ </layer>
+ <layer id="5" name="Deco" width="95" height="79">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20KP6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH4GdUQAAQ==
+  </data>
+ </layer>
+</map>

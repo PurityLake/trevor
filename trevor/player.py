@@ -26,8 +26,9 @@ class Player(arcade.Sprite):
 
     def __init__(self, app_path: str):
         filename = os.path.join(app_path, FILENAME)
-        super().__init__(filename, 1)
+        super().__init__(filename, 0.5)
 
+        self.scale: float = 0.5
         self.moving: bool = False
         self.vec: Tuple[int, int] = (0, 0)
         self.rot_dir: int = 1
@@ -39,7 +40,7 @@ class Player(arcade.Sprite):
                 (-self.width / 2 + CELL_WIDTH, -self.height / 4),
                 ( self.width / 2 - CELL_WIDTH, -self.height / 4),
                 ( self.width / 2 - CELL_WIDTH, -self.height / 2)])
-        self.set_position(100, 100)
+        self.set_position(400, 400) 
 
     def on_update(self, delta_time: float = 1 / 60):
         super().update()
