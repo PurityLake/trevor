@@ -31,6 +31,11 @@ the following libraries:
     - https://github.com/python/mypy
 
 ## How To Run
+### Windows
+```
+python run_game.py
+```
+
 ### Linux and MacOS
 ```
 python3 run_game.py
