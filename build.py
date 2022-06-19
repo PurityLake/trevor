@@ -5,6 +5,7 @@ import PyInstaller.__main__
 if __name__ == "__main__":
     PyInstaller.__main__.run([
         "run_game.py",
+        "--clean",
         "--onefile",
         "--onedir",
         "--noconsole",

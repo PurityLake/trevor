@@ -52,29 +52,21 @@ class MainGameScene(arcade.Scene, TrevorScene):
             self.player.copy, [ self.rocks, self.edge ]
         )
 
-        self.manager: gui.UIManager = None
-        self.hbox: gui.UIBoxLayout = None
-        self.heartfullsprite: arcade.Sprite = None
-        self.heartemptysprite: arcade.Sprite = None
-        self.heartwidgets: List[gui.UISpriteWidget] = None
-        self.vbox: gui.UIBoxLayout = None
-        self.thirst_bar: Bar = None
-        self.hunger_bar: Bar = None
         self.__setup_gui()
 
         self.pan_camera_to_user()
 
     def __setup_gui(self):
-        self.manager = gui.UIManager()
+        self.manager: gui.UIManager = gui.UIManager()
         self.manager.enable()
 
-        self.hbox = gui.UIBoxLayout(vertical=False)
-        self.heartfullsprite = arcade.Sprite(
-            os.path.join(self.app_path, "assets", "images", "heartfull.png"), 0.25)
-        self.heartemptysprite = arcade.Sprite(
-            os.path.join(self.app_path, "assets", "images", "heartempty.png"), 0.25)
+        self.hbox: ui.UIBoxLayout = gui.UIBoxLayout(vertical=False)
+        self.heartfullsprite: arcade.Sprite = arcade.Sprite(
+                os.path.join(self.app_path, "assets", "images", "heartfull.png"), 0.25)
+        self.heartemptysprite: arcade.Sprite =  arcade.Sprite(
+                os.path.join(self.app_path, "assets", "images", "heartempty.png"), 0.25)
 
-        self.heartwidgets = []
+        self.heartwidgets: List[gui.UISpriteWidget] = []
         for i in range(Player.MAX_HEALTH):
             if i < self.player.health:
                 widget = gui.UISpriteWidget(
@@ -92,8 +84,8 @@ class MainGameScene(arcade.Scene, TrevorScene):
                 self.heartwidgets.append(widget.with_space_around(left=5, bottom=10))
             self.hbox.add(self.heartwidgets[i])
 
-        self.vbox = gui.UIBoxLayout()
-        self.thirst_bar = Bar(
+        self.vbox: gui.UIBoxLayout = gui.UIBoxLayout()
+        self.thirst_bar: Bar = Bar(
             texture_name=os.path.join(self.app_path, "assets", "images", "hydration.png"),
             value=50,
             min_value=0,
@@ -105,7 +97,7 @@ class MainGameScene(arcade.Scene, TrevorScene):
             width=250
         )
 
-        self.hunger_bar = Bar(
+        self.hunger_bar: Bar = Bar(
             texture_name=os.path.join(self.app_path, "assets", "images", "hunger.png"),
             value=50,
             min_value=0,
